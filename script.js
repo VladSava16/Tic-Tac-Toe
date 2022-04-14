@@ -3,13 +3,14 @@ let currentPlayer = 1;
 const gameBoard = (() => {
     let board = [-1, -2, -3, -4, -5, -6, -7, -8, -9];
     let cells = document.querySelectorAll('.cell');
+    let cellEvent = (e) => {
+        displayController.updateBoard(e.target.dataset.cellpos, currentPlayer);
+        checkWinner();
+    }
     cells.forEach((cell) => {
-        cell.addEventListener('click', (e) => {
-            displayController.updateBoard(e.target.dataset.cellpos, currentPlayer);
-            checkWinner();
-        });
+        cell.addEventListener('click', cellEvent);
     });
-    const checkWinner = () =>{
+    const checkWinner = () => {
         let ok = 1;
         if((board[0] === board[1] && board[1] === board[2]) || (board[0] === board[3] && board[3] === board[6]) || (board[0] === board[4] && board[4] === board[8]))
             return displayWinner(board[0]);
@@ -39,6 +40,9 @@ const gameBoard = (() => {
             winnerText.classList.add('winnerText');
         }
         document.body.appendChild(winnerText);
+        cells.forEach((cell) => {
+            cell.removeEventListener('click', cellEvent);
+        });
     };
     return {board, checkWinner};
 })();
