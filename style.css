@@ -25,6 +25,10 @@ body{
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+.cell:hover{
+    background-color: lightblue;
+    border: 1px solid black;
+}
 .backslash{
     width: 4px;
     height: 80px;

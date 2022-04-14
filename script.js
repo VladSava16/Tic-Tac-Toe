@@ -32,9 +32,16 @@ const gameBoard = (() => {
     const displayWinner = (winner) => {
         let winnerText = document.createElement('div');
         if(typeof winner == "number"){
-            winnerText.textContent = `The winner is Player ${winner + 1}.`;
+            if(winner === 0){
+            winnerText.textContent = `The winner is Player O.`;
             winnerText.classList.add('winnerText');
+            }
+            else{
+            winnerText.textContent = `The winner is Player X.`;
+            winnerText.classList.add('winnerText');
+            }
         }
+
         else{
             winnerText.textContent = `It's a tie.`;
             winnerText.classList.add('winnerText');
@@ -56,6 +63,7 @@ const displayController = (() => {
                 sign.classList.add('zero');
                 cell.appendChild(sign);
                 currentPlayer = 1;
+                updatePlayerTurn('X');
             }
             else{
                 let forwardSlash = document.createElement('div');
@@ -65,8 +73,13 @@ const displayController = (() => {
                 cell.appendChild(forwardSlash);
                 cell.appendChild(backSlash);
                 currentPlayer = 0;
+                updatePlayerTurn('O');
             }
         }
+    }
+    let playerTurn = document.querySelector('.playerTurn');
+    const updatePlayerTurn = (player) => {
+        playerTurn.textContent = `Player ${player}'s turn.`;
     }
     return{updateBoard};
 })();
